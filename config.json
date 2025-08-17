@@ -1,7 +1,7 @@
 {
   "welcomeTitle": "欢迎访问加速，正在自动匹配最佳线路访问官网",
   "urls": [
-    "dl.xianluwan.com",
-    "mb.xianluwan.com"
+    "https://dl.xianluwan.com/",
+    "https://mb.xianluwan.com/"
   ]
 }
