@@ -1,7 +1,9 @@
 {
   "welcomeTitle": "欢迎访问加速，正在自动匹配最佳线路访问官网",
   "urls": [
-    "https://user.xianluwan.com/",
-    
+    "aHR0cHM6Ly91c2VyLnhpYW5sdXdhbi5jb20v",      
+    "aHR0cHM6Ly91c2VyMi54aWFubHV3YW4uY29tLw==",  
+    "aHR0cHM6Ly91c2VyMy54aWFubHV3YW4uY29tLw==",  
+    "https://backup.xianluwan.net/"
   ]
 }
