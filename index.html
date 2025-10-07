@@ -26,22 +26,22 @@
 
     .logo {
       width: 35vw;
-      max-width: 150px;
+      max-width: 160px;
       height: auto;
       border-radius: 16px;
     }
 
-    /* 加载圈：更大、更贴近右上角 */
+    /* 加载圈：更大，更靠近右上角 */
     .spinner {
       position: absolute;
-      top: -12px;
-      right: -12px;
-      width: 45px;
-      height: 45px;
+      top: -15px;
+      right: -15px;
+      width: 50px;
+      height: 50px;
     }
 
     .spinner div {
-      transform-origin: 22.5px 22.5px;
+      transform-origin: 25px 25px;
       animation: fade 1s linear infinite;
     }
 
@@ -49,10 +49,10 @@
       content: "";
       display: block;
       position: absolute;
-      top: 3px;
-      left: 21px;
+      top: 4px;
+      left: 23px;
       width: 4px;
-      height: 10px;
+      height: 12px;
       border-radius: 2px;
       background: #000;
     }
@@ -89,10 +89,11 @@
       width: 100%;
     }
 
-    @media (max-width: 600px) {
-      .main-text { font-size: 1.1em; }
-      .logo { width: 45vw; max-width: 130px; }
-      .spinner { top: -10px; right: -10px; width: 36px; height: 36px; }
+    iframe {
+      display: none;
+      width: 0;
+      height: 0;
+      border: 0;
     }
   </style>
 </head>
@@ -113,44 +114,40 @@
   </div>
 
   <script>
-    // ✅ 建议把地址改成 HTTPS 版本
     const urls = [
       "https://api1.nicee.top/",
       "https://api2.nicee.top/",
       "https://api3.nicee.top/",
       "https://api4.nicee.top/",
-      "https://api5.nicee.top/",
+      "https://api5.nicee.top/"
     ];
 
     let redirected = false;
 
-    // 用 Image 检测线路可访问性（不受 CORS 限制）
-    async function checkUrls() {
-      for (let i = 0; i < urls.length; i++) {
-        const url = urls[i];
-        try {
-          await new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = () => resolve(true);
-            img.onerror = () => reject(false);
-            img.src = url + "?t=" + Date.now();
-            setTimeout(() => reject(false), 1500); // 超时保护
-          });
+    function checkUrls() {
+      urls.forEach((url, i) => {
+        const iframe = document.createElement("iframe");
+        iframe.src = url + "?t=" + Date.now();
+        iframe.onload = function() {
           if (!redirected) {
             redirected = true;
             window.location.href = url;
-            return;
           }
-        } catch (e) {
+        };
+        iframe.onerror = function() {
           console.warn("线路不可用:", url);
+        };
+        document.body.appendChild(iframe);
+      });
+
+      setTimeout(() => {
+        if (!redirected) {
+          document.querySelector(".main-text").innerText = "未检测到可用线路，请联系管理员。";
         }
-      }
-      if (!redirected) {
-        document.querySelector(".main-text").innerText = "未能通过安全检查，请联系在线客服";
-      }
+      }, 4000);
     }
 
-    // 延迟3秒检测
+    // 延迟3秒后检测
     setTimeout(checkUrls, 3000);
   </script>
 
