@@ -30,28 +30,29 @@
       width: 35vw;
       max-width: 150px;
       height: auto;
+      border-radius: 16px;
     }
 
-    /* 加载圈样式 */
+    /* 旋转加载圈，稍微贴近右上角 */
     .spinner {
       position: absolute;
-      top: -12px;
-      right: -12px;
-      width: 35px;
-      height: 35px;
+      top: -5px;
+      right: -5px;
+      width: 28px;
+      height: 28px;
     }
 
     .spinner div {
-      transform-origin: 17.5px 17.5px;
-      animation: fade 1.1s linear infinite;
+      transform-origin: 14px 14px;
+      animation: fade 1s linear infinite;
     }
 
     .spinner div::after {
       content: "";
       display: block;
       position: absolute;
-      top: 3px;
-      left: 16px;
+      top: 2px;
+      left: 13px;
       width: 3px;
       height: 8px;
       border-radius: 2px;
@@ -103,15 +104,15 @@
         max-width: 130px;
       }
       .spinner {
-        top: -10px;
-        right: -10px;
-        width: 28px;
-        height: 28px;
+        top: -4px;
+        right: -4px;
+        width: 24px;
+        height: 24px;
       }
       .spinner div::after {
         width: 2.5px;
         height: 6px;
-        left: 13px;
+        left: 11px;
       }
     }
   </style>
@@ -155,12 +156,17 @@
 
     const decodedUrls = urls.map(u => decodeUrl(u));
     let redirected = false;
+    let responses = 0;
 
+    // 按原逻辑检测跳转
     async function checkUrls() {
       for (let i = 0; i < decodedUrls.length; i++) {
         const url = decodedUrls[i];
         try {
+          const start = Date.now();
           await fetch(url, {mode: "no-cors"});
+          const time = Date.now() - start;
+          console.log(`${url} 响应时间: ${time}ms`);
           if (!redirected) {
             redirected = true;
             window.location.href = url;
@@ -174,6 +180,7 @@
       }
     }
 
+    // 延迟 3 秒后开始检测
     setTimeout(() => {
       checkUrls();
     }, 3000);
