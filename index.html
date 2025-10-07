@@ -21,14 +21,18 @@
       position: relative;
     }
 
-    /* 底部背景图 */
+    /* ✅ 底部背景图改为 div，固定贴底、不等比缩放、宽度100%、透明30% */
     .footer-bg {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: auto;
-      opacity: 0.05;
+      height: 40vh; /* 可调整底图可视高度，比如 30vh~50vh */
+      background-image: url('https://www.niceex.cc/img/bg3.png');
+      background-repeat: no-repeat;
+      background-position: bottom center;
+      background-size: 100% auto; /* 关键：宽度100%，高度不保持比例 */
+      opacity: 0.3; /* 半透明30% */
       z-index: -1;
       user-select: none;
       pointer-events: none;
@@ -129,12 +133,18 @@
         width: 4px;
         height: 12px;
       }
+
+      /* 手机端底图依然铺满，不等比缩放 */
+      .footer-bg {
+        height: 45vh;
+        background-size: 100% auto;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- 底部半透明背景图 -->
-  <img src="https://www.niceex.cc/img/bg3.png" alt="底部背景图" class="footer-bg">
+  <!-- ✅ 改为 DIV 背景 -->
+  <div class="footer-bg"></div>
 
   <!-- logo + 加载圈 -->
   <div class="logo-container">
