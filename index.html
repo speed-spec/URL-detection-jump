@@ -3,99 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nicee加速安全检查</title>
-  <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="0f267bf9-a61b-48da-870b-b4bac9ed9a9f";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+  <title>Nicee加速安全访问检查</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: "Microsoft YaHei", Arial, sans-serif;
-      background: url('https://file.51pptmoban.com/d/file/2024/07/28/f9749ea9669afbb0a6f71401349c28b7.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background-color: #fff;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      color: white;
+      color: #000;
+      font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
       text-align: center;
     }
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 15px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+
+    /* logo 容器 */
+    .logo-container {
+      position: relative;
+      display: inline-block;
     }
-  #logo {
-    max-width: 200px;   /* 最大宽度 */
-    max-height: 200px;  /* 最大高度 */
-    width: auto;
-    height: auto;
-    margin: 20px 0;
-    border-radius: 20px;   /* 四边圆角，数值越大弧度越大 */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* 阴影美化 */
+
+    /* logo 图片 */
+    .logo {
+      width: 35vw;
+      max-width: 150px;
+      height: auto;
     }
-    p {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+
+    /* 加载圈样式 */
+    .spinner {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      width: 35px;
+      height: 35px;
     }
-    .progress-container {
-      width: 60%;
-      height: 18px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 9px;
-      overflow: hidden;
-      margin: 20px auto;
+
+    .spinner div {
+      transform-origin: 17.5px 17.5px;
+      animation: fade 1.1s linear infinite;
     }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #0074d9, #00c3ff);
-      transition: width 0.3s;
+
+    .spinner div::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 3px;
+      left: 16px;
+      width: 3px;
+      height: 8px;
+      border-radius: 2px;
+      background: #000;
     }
-    .enter-btn {
-      padding: 15px 40px;
-      font-size: 1.2em;
-      color: white;
-      background: linear-gradient(90deg, #0074d9, #00c3ff);
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: transform 0.2s, background 0.3s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      margin-top: 30px;
+
+    /* 八个刻度 */
+    .spinner div:nth-child(1) { transform: rotate(0deg);   animation-delay: -0.875s; }
+    .spinner div:nth-child(2) { transform: rotate(45deg);  animation-delay: -0.75s; }
+    .spinner div:nth-child(3) { transform: rotate(90deg);  animation-delay: -0.625s; }
+    .spinner div:nth-child(4) { transform: rotate(135deg); animation-delay: -0.5s; }
+    .spinner div:nth-child(5) { transform: rotate(180deg); animation-delay: -0.375s; }
+    .spinner div:nth-child(6) { transform: rotate(225deg); animation-delay: -0.25s; }
+    .spinner div:nth-child(7) { transform: rotate(270deg); animation-delay: -0.125s; }
+    .spinner div:nth-child(8) { transform: rotate(315deg); animation-delay: 0s; }
+
+    @keyframes fade {
+      0% { opacity: 1; }
+      100% { opacity: 0.2; }
     }
-    .enter-btn:hover {
-      transform: scale(1.05);
-      background: linear-gradient(90deg, #0056b3, #0099cc);
+
+    /* 主文案 */
+    .main-text {
+      font-size: 1.3em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-top: 25px;
+      margin-bottom: 50px;
+      word-break: keep-all;
+    }
+
+    /* 底部角标 */
+    .footer {
+      position: absolute;
+      bottom: 25px;
+      text-align: center;
+      font-size: 0.85em;
+      color: #999;
+      line-height: 1.6;
+      width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      .main-text {
+        font-size: 1.1em;
+      }
+      .logo {
+        width: 45vw;
+        max-width: 130px;
+      }
+      .spinner {
+        top: -10px;
+        right: -10px;
+        width: 28px;
+        height: 28px;
+      }
+      .spinner div::after {
+        width: 2.5px;
+        height: 6px;
+        left: 13px;
+      }
     }
   </style>
 </head>
 <body>
-  <img src="https://s2.loli.net/2025/08/17/4dngZ2bAWEMVjmO.webp" alt="仙路湾 LOGO" id="logo">
-  <h1 id="welcome">仙路湾</h1>
-  <p id="status">正在进入官网</p>
-  <p id="pre-countdown"></p>
-  <p id="countdown"></p>
-  <p id="current-check"></p> <!-- 新增：显示正在检测的线路 -->
-
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
+  <!-- logo + 加载圈 -->
+  <div class="logo-container">
+    <img src="https://www.nicee.top/assets/logo4.png" alt="Nicee Logo" class="logo">
+    <div class="spinner">
+      <div></div><div></div><div></div><div></div>
+      <div></div><div></div><div></div><div></div>
+    </div>
   </div>
 
-  <button class="enter-btn" onclick="manualEnter()">立即进入</button>
+  <!-- 主标题 -->
+  <p class="main-text">Nicee加速安全访问检查中</p>
 
+  <!-- 底部角标 -->
+  <div class="footer">
+    <p>由澳大利亚实体公司 NICE-IS PTY LTD 运营</p>
+    <p>Nicee加速 版权所有 ©2025</p>
+  </div>
+
+  <!-- JS 检测逻辑 -->
   <script>
-    // 配置多线路（支持 base64 或明文 URL）
     const urls = [
-      "http://api1.nicee.top/", 
-      "http://api2.nicee.top/", 
-      "http://api3.nicee.top/", 
+      "http://api1.nicee.top/",
+      "http://api2.nicee.top/",
+      "http://api3.nicee.top/",
       "http://api4.nicee.top/",
-      "http://api5.nicee.top/", 
+      "http://api5.nicee.top/",
     ];
 
-    // 解码 base64 或直接返回
     function decodeUrl(str) {
       try {
         const decoded = atob(str);
@@ -106,84 +155,40 @@
 
     const decodedUrls = urls.map(u => decodeUrl(u));
     let redirected = false;
-    let responses = 0;
 
-    // 更新进度条
-    function updateProgress() {
-      responses++;
-      const bar = document.getElementById("progressBar");
-      bar.style.width = (responses / decodedUrls.length) * 100 + "%";
-    }
-
-    // 检查可用线路
     async function checkUrls() {
       for (let i = 0; i < decodedUrls.length; i++) {
         const url = decodedUrls[i];
-        document.getElementById("current-check").innerText = `正在检测线路 ${i+1}`;
-
         try {
-          const start = Date.now();
           await fetch(url, {mode: "no-cors"});
-          const time = Date.now() - start;
-          console.log(`${url} 响应时间: ${time}ms`);
           if (!redirected) {
             redirected = true;
-            document.getElementById("status").innerText = "已找到可用线路，正在跳转…";
             window.location.href = url;
           }
         } catch (e) {
           console.warn(`无法访问 ${url}`);
-        } finally {
-          updateProgress();
         }
       }
       if (!redirected) {
-        document.getElementById("status").innerText = "没有可用线路，请联系管理员";
+        document.querySelector(".main-text").innerText = "未检测到可用线路，请联系管理员。";
       }
     }
 
-    // 手动进入
-    function manualEnter() {
-      if (decodedUrls.length > 0) {
-        window.location.href = decodedUrls[0];
-      }
-    }
-
-    // 前置倒计时 3 秒
-    let preCountdown = 3;
-    const preCountdownEl = document.getElementById("pre-countdown");
-    const preTimer = setInterval(() => {
-      preCountdownEl.innerText = `${preCountdown} 秒后开始检测线路…`;
-      if (preCountdown <= 0) {
-        clearInterval(preTimer);
-        preCountdownEl.innerText = "";
-        document.getElementById("status").innerText = "正在为您检测最快的线路，请稍候…";
-        startDetection();
-      }
-      preCountdown--;
-    }, 1000);
-
-    // 正式检测 + 5 秒倒计时
-    function startDetection() {
+    setTimeout(() => {
       checkUrls();
-      let countdown = 5;
-      const countdownEl = document.getElementById("countdown");
-      const timer = setInterval(() => {
-        if (redirected) {
-          clearInterval(timer);
-          return;
-        }
-        countdownEl.innerText = `${countdown} 秒后自动进入主线路`;
-        if (countdown <= 0) {
-          clearInterval(timer);
-          if (!redirected) {
-            redirected = true;
-            window.location.href = decodedUrls[0];
-          }
-        }
-        countdown--;
-      }, 1000);
-    }
+    }, 3000);
+  </script>
+
+  <!-- Crisp 客服 -->
+  <script type="text/javascript">
+    window.$crisp=[];
+    window.CRISP_WEBSITE_ID="7748a1db-12e6-4b49-9071-ceddd72409b1";
+    (function(){
+      d=document;s=d.createElement("script");
+      s.src="https://client.crisp.chat/l.js";
+      s.async=1;
+      d.getElementsByTagName("head")[0].appendChild(s);
+    })();
   </script>
 </body>
 </html>
