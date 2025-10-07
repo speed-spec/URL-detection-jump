@@ -31,17 +31,17 @@
       border-radius: 16px;
     }
 
-    /* 加载圈 — 稍大，贴近右上角 */
+    /* 加载圈：更大、更贴近右上角 */
     .spinner {
       position: absolute;
-      top: -8px;
-      right: -8px;
-      width: 36px;
-      height: 36px;
+      top: -12px;
+      right: -12px;
+      width: 45px;
+      height: 45px;
     }
 
     .spinner div {
-      transform-origin: 18px 18px;
+      transform-origin: 22.5px 22.5px;
       animation: fade 1s linear infinite;
     }
 
@@ -49,17 +49,17 @@
       content: "";
       display: block;
       position: absolute;
-      top: 2px;
-      left: 16px;
-      width: 3.5px;
-      height: 9px;
+      top: 3px;
+      left: 21px;
+      width: 4px;
+      height: 10px;
       border-radius: 2px;
       background: #000;
     }
 
-    .spinner div:nth-child(1) { transform: rotate(0deg);   animation-delay: -0.875s; }
-    .spinner div:nth-child(2) { transform: rotate(45deg);  animation-delay: -0.75s; }
-    .spinner div:nth-child(3) { transform: rotate(90deg);  animation-delay: -0.625s; }
+    .spinner div:nth-child(1) { transform: rotate(0deg); animation-delay: -0.875s; }
+    .spinner div:nth-child(2) { transform: rotate(45deg); animation-delay: -0.75s; }
+    .spinner div:nth-child(3) { transform: rotate(90deg); animation-delay: -0.625s; }
     .spinner div:nth-child(4) { transform: rotate(135deg); animation-delay: -0.5s; }
     .spinner div:nth-child(5) { transform: rotate(180deg); animation-delay: -0.375s; }
     .spinner div:nth-child(6) { transform: rotate(225deg); animation-delay: -0.25s; }
@@ -77,7 +77,6 @@
       letter-spacing: 0.5px;
       margin-top: 25px;
       margin-bottom: 50px;
-      word-break: keep-all;
     }
 
     .footer {
@@ -93,7 +92,7 @@
     @media (max-width: 600px) {
       .main-text { font-size: 1.1em; }
       .logo { width: 45vw; max-width: 130px; }
-      .spinner { top: -6px; right: -6px; width: 30px; height: 30px; }
+      .spinner { top: -10px; right: -10px; width: 36px; height: 36px; }
     }
   </style>
 </head>
@@ -114,17 +113,18 @@
   </div>
 
   <script>
+    // ✅ 建议把地址改成 HTTPS 版本
     const urls = [
-      "http://api1.nicee.top/",
-      "http://api2.nicee.top/",
-      "http://api3.nicee.top/",
-      "http://api4.nicee.top/",
-      "http://api5.nicee.top/",
+      "https://api1.nicee.top/",
+      "https://api2.nicee.top/",
+      "https://api3.nicee.top/",
+      "https://api4.nicee.top/",
+      "https://api5.nicee.top/",
     ];
 
     let redirected = false;
 
-    // ✅ 用 Image 对象检测连接是否可用（规避 CORS）
+    // 用 Image 检测线路可访问性（不受 CORS 限制）
     async function checkUrls() {
       for (let i = 0; i < urls.length; i++) {
         const url = urls[i];
@@ -134,7 +134,7 @@
             img.onload = () => resolve(true);
             img.onerror = () => reject(false);
             img.src = url + "?t=" + Date.now();
-            setTimeout(() => reject(false), 1200); // 超时保护
+            setTimeout(() => reject(false), 1500); // 超时保护
           });
           if (!redirected) {
             redirected = true;
@@ -150,8 +150,8 @@
       }
     }
 
-    // 延迟3秒后开始检测
-    setTimeout(() => { checkUrls(); }, 3000);
+    // 延迟3秒检测
+    setTimeout(checkUrls, 3000);
   </script>
 
   <!-- Crisp 客服 -->
