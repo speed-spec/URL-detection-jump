@@ -19,13 +19,11 @@
       text-align: center;
     }
 
-    /* logo 容器 */
     .logo-container {
       position: relative;
       display: inline-block;
     }
 
-    /* logo 图片 */
     .logo {
       width: 35vw;
       max-width: 150px;
@@ -33,17 +31,17 @@
       border-radius: 16px;
     }
 
-    /* 旋转加载圈，稍微贴近右上角 */
+    /* 加载圈 — 稍大，贴近右上角 */
     .spinner {
       position: absolute;
-      top: -5px;
-      right: -5px;
-      width: 28px;
-      height: 28px;
+      top: -8px;
+      right: -8px;
+      width: 36px;
+      height: 36px;
     }
 
     .spinner div {
-      transform-origin: 14px 14px;
+      transform-origin: 18px 18px;
       animation: fade 1s linear infinite;
     }
 
@@ -52,14 +50,13 @@
       display: block;
       position: absolute;
       top: 2px;
-      left: 13px;
-      width: 3px;
-      height: 8px;
+      left: 16px;
+      width: 3.5px;
+      height: 9px;
       border-radius: 2px;
       background: #000;
     }
 
-    /* 八个刻度 */
     .spinner div:nth-child(1) { transform: rotate(0deg);   animation-delay: -0.875s; }
     .spinner div:nth-child(2) { transform: rotate(45deg);  animation-delay: -0.75s; }
     .spinner div:nth-child(3) { transform: rotate(90deg);  animation-delay: -0.625s; }
@@ -74,7 +71,6 @@
       100% { opacity: 0.2; }
     }
 
-    /* 主文案 */
     .main-text {
       font-size: 1.3em;
       font-weight: 600;
@@ -84,7 +80,6 @@
       word-break: keep-all;
     }
 
-    /* 底部角标 */
     .footer {
       position: absolute;
       bottom: 25px;
@@ -96,29 +91,13 @@
     }
 
     @media (max-width: 600px) {
-      .main-text {
-        font-size: 1.1em;
-      }
-      .logo {
-        width: 45vw;
-        max-width: 130px;
-      }
-      .spinner {
-        top: -4px;
-        right: -4px;
-        width: 24px;
-        height: 24px;
-      }
-      .spinner div::after {
-        width: 2.5px;
-        height: 6px;
-        left: 11px;
-      }
+      .main-text { font-size: 1.1em; }
+      .logo { width: 45vw; max-width: 130px; }
+      .spinner { top: -6px; right: -6px; width: 30px; height: 30px; }
     }
   </style>
 </head>
 <body>
-  <!-- logo + 加载圈 -->
   <div class="logo-container">
     <img src="https://www.nicee.top/assets/logo4.png" alt="Nicee Logo" class="logo">
     <div class="spinner">
@@ -127,16 +106,13 @@
     </div>
   </div>
 
-  <!-- 主标题 -->
   <p class="main-text">Nicee加速安全访问检查中</p>
 
-  <!-- 底部角标 -->
   <div class="footer">
     <p>由澳大利亚实体公司 NICE-IS PTY LTD 运营</p>
     <p>Nicee加速 版权所有 ©2025</p>
   </div>
 
-  <!-- JS 检测逻辑 -->
   <script>
     const urls = [
       "http://api1.nicee.top/",
@@ -146,33 +122,27 @@
       "http://api5.nicee.top/",
     ];
 
-    function decodeUrl(str) {
-      try {
-        const decoded = atob(str);
-        if (decoded.startsWith("http")) return decoded;
-      } catch (e) {}
-      return str;
-    }
-
-    const decodedUrls = urls.map(u => decodeUrl(u));
     let redirected = false;
-    let responses = 0;
 
-    // 按原逻辑检测跳转
+    // ✅ 用 Image 对象检测连接是否可用（规避 CORS）
     async function checkUrls() {
-      for (let i = 0; i < decodedUrls.length; i++) {
-        const url = decodedUrls[i];
+      for (let i = 0; i < urls.length; i++) {
+        const url = urls[i];
         try {
-          const start = Date.now();
-          await fetch(url, {mode: "no-cors"});
-          const time = Date.now() - start;
-          console.log(`${url} 响应时间: ${time}ms`);
+          await new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(true);
+            img.onerror = () => reject(false);
+            img.src = url + "?t=" + Date.now();
+            setTimeout(() => reject(false), 1200); // 超时保护
+          });
           if (!redirected) {
             redirected = true;
             window.location.href = url;
+            return;
           }
         } catch (e) {
-          console.warn(`无法访问 ${url}`);
+          console.warn("线路不可用:", url);
         }
       }
       if (!redirected) {
@@ -180,10 +150,8 @@
       }
     }
 
-    // 延迟 3 秒后开始检测
-    setTimeout(() => {
-      checkUrls();
-    }, 3000);
+    // 延迟3秒后开始检测
+    setTimeout(() => { checkUrls(); }, 3000);
   </script>
 
   <!-- Crisp 客服 -->
