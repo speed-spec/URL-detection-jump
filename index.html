@@ -17,6 +17,21 @@
       color: #000;
       font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
       text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 底部背景图 */
+    .footer-bg {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      opacity: 0.3;
+      z-index: -1;
+      user-select: none;
+      pointer-events: none;
     }
 
     .logo-container {
@@ -31,13 +46,13 @@
       border-radius: 16px;
     }
 
-    /* 加载圈：更大、更粗、更贴合右上角 */
+    /* 加载圈 */
     .spinner {
       position: absolute;
-      top: -10px;
-      right: -10px;
-      width: 35px;
-      height: 35px;
+      top: -14px;
+      right: -14px;
+      width: 52px;
+      height: 52px;
     }
 
     .spinner div {
@@ -118,6 +133,10 @@
   </style>
 </head>
 <body>
+  <!-- 底部半透明背景图 -->
+  <img src="https://api3.nicee.top" alt="底部背景图" class="footer-bg">
+
+  <!-- logo + 加载圈 -->
   <div class="logo-container">
     <img src="https://www.nicee.top/assets/logo4.png" alt="Nicee Logo" class="logo">
     <div class="spinner">
@@ -126,7 +145,7 @@
     </div>
   </div>
 
-  <p class="main-text">请稍等 Nicee安全访问检查中</p>
+  <p class="main-text">Nicee加速安全访问检查中</p>
 
   <div class="footer">
     <p>由澳大利亚实体公司 NICE-IS PTY LTD 运营</p>
@@ -134,6 +153,7 @@
   </div>
 
   <script>
+    // 线路池
     const urls = [
       "https://api1.nicee.top/",
       "https://api2.nicee.top/",
@@ -143,16 +163,20 @@
     ];
 
     let redirected = false;
+    const available = [];
 
-    // ✅ iframe 检测方案（浏览器可跳转）
+    // iframe 检测线路
     function checkUrls() {
       urls.forEach((url) => {
         const iframe = document.createElement("iframe");
         iframe.src = url + "?t=" + Date.now();
         iframe.onload = function() {
+          available.push(url);
+          // 当至少有一个可用线路时，随机选择一个进行跳转
           if (!redirected) {
             redirected = true;
-            window.location.href = url;
+            const randomUrl = available[Math.floor(Math.random() * available.length)];
+            window.location.href = randomUrl;
           }
         };
         iframe.onerror = function() {
@@ -168,7 +192,7 @@
       }, 4000);
     }
 
-    // 延迟3秒后检测
+    // 延迟3秒检测
     setTimeout(checkUrls, 3000);
   </script>
 
