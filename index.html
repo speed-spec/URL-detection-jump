@@ -31,17 +31,17 @@
       border-radius: 16px;
     }
 
-    /* 加载圈：更大，更靠近右上角 */
+    /* 加载圈：更大、更粗、更贴合右上角 */
     .spinner {
       position: absolute;
-      top: -15px;
-      right: -15px;
-      width: 50px;
-      height: 50px;
+      top: -14px;
+      right: -14px;
+      width: 52px;
+      height: 52px;
     }
 
     .spinner div {
-      transform-origin: 25px 25px;
+      transform-origin: 26px 26px;
       animation: fade 1s linear infinite;
     }
 
@@ -49,11 +49,11 @@
       content: "";
       display: block;
       position: absolute;
-      top: 4px;
-      left: 23px;
-      width: 4px;
-      height: 12px;
-      border-radius: 2px;
+      top: 3px;
+      left: 24px;
+      width: 5px;
+      height: 14px;
+      border-radius: 3px;
       background: #000;
     }
 
@@ -95,6 +95,26 @@
       height: 0;
       border: 0;
     }
+
+    @media (max-width: 600px) {
+      .main-text { font-size: 1.1em; }
+      .logo { width: 45vw; max-width: 130px; }
+      .spinner {
+        top: -10px;
+        right: -10px;
+        width: 40px;
+        height: 40px;
+      }
+      .spinner div {
+        transform-origin: 20px 20px;
+      }
+      .spinner div::after {
+        top: 2px;
+        left: 18px;
+        width: 4px;
+        height: 12px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -124,8 +144,9 @@
 
     let redirected = false;
 
+    // ✅ iframe 检测方案（浏览器可跳转）
     function checkUrls() {
-      urls.forEach((url, i) => {
+      urls.forEach((url) => {
         const iframe = document.createElement("iframe");
         iframe.src = url + "?t=" + Date.now();
         iframe.onload = function() {
